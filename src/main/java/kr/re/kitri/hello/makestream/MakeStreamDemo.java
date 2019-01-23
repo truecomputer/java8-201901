@@ -1,0 +1,33 @@
+package kr.re.kitri.hello.makestream;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
+import java.util.stream.Stream;
+
+public class MakeStreamDemo {
+    public static void main(String[] args) {
+        // 1. 컬렉션을 스트림으로
+        List<String> listOfStream = Arrays.asList("a", "b", "c", "d");
+        listOfStream.stream().forEach(d -> System.out.println(d));
+
+        // 2. 배열을 스트림으로
+        String[] strArray = new String[] {"a", "2", "3", "4"};
+        Stream<String> stream = Arrays.stream(strArray);
+        Stream<String> strArray1 = Stream.of(strArray);
+
+        int[] intArray = {1, 2, 3, 4, 5};
+        IntStream stream1 = Arrays.stream(intArray);
+        IntStream intArray1 = IntStream.of(intArray);
+
+        // 3. 숫자 스트림 생성(숫자로된)
+        IntStream.range(1, 100).forEach(d -> System.out.println(d));
+        long sum = LongStream.range(1, 100_000L).sum();
+        System.out.println(sum);
+
+        // 4. 랜덤넘버 생성 (무한스트림)
+        new Random().longs().limit(10).forEach(d -> System.out.println(d));
+    }
+}
