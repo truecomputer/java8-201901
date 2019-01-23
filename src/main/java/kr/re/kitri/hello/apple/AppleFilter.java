@@ -1,9 +1,9 @@
 package kr.re.kitri.hello.apple;
 
-import java.awt.desktop.AppForegroundListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class AppleFilter {
     public static void main(String[] args) {
@@ -21,19 +21,23 @@ public class AppleFilter {
         List<Apple> result3 = filterApples(apples, new RedHeavyApplePredicate());
 //        System.out.println(result3);
 
-        List<Apple> result4 = filterApples(apples, new ApplePredicate() {
-            @Override
-            public boolean test(Apple apple) {
-                return apple.getColor().equals("green") && apple.getWeight() < 100;
-            }
-        });
+//        List<Apple> result4 = filterApples(apples, new ApplePredicate() {
+//            @Override
+//            public boolean test(Apple apple) {
+//                return apple.getColor().equals("green") && apple.getWeight() < 100;
+//            }
+//        });
 //        System.out.println(result4);
 
         List<Apple> result5 = filterApples(apples, a -> a.getColor().equals("green") && a.getWeight() < 100);
-        System.out.println(result5);
+//        System.out.println(result5);
+
+        Predicate<Apple> p = a -> a.getWeight() >= 100;
+        List<Apple> list5 = filterApples(apples, p.negate().and(a -> a.getColor().equals("red")).negate());
+        System.out.println(list5);
     }
 
-    public static List<Apple> filterApples(List<Apple> inventory, ApplePredicate p) {
+    public static List<Apple> filterApples(List<Apple> inventory, Predicate<Apple> p) {
         List<Apple> result = new ArrayList<>();
         for (Apple apple : inventory) {
             if (p.test(apple)) {
